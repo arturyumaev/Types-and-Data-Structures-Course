@@ -15,7 +15,6 @@ typedef struct {                    /* Основная структура */
 
 void push(Stack* stack, char* str)
 {
-    printf("Получили строку в push:\nее адрес: %p, сама строка: %s\n", str, str);
     if (stack->size >= STACK_MAX_SIZE)
     {
         printf("Stack Overflow Error\n");
@@ -23,7 +22,6 @@ void push(Stack* stack, char* str)
     }
 
     stack->_stack[stack->size] = str;
-    printf("Вставили ее в стэк, проверяем: %s\n", stack->_stack[stack->size]);
     stack->size++;
 }
 
@@ -32,27 +30,21 @@ void print_stack(Stack* stack)
     printf("\nSTACK HEADER:\n");
     printf("\tCurrent free space: %d\n", STACK_MAX_SIZE - stack->size);
     printf("\tMax stack size: %d\n", STACK_MAX_SIZE);
+    printf("\n\t i:     Address    \tString\n\n");
     
     for (int i = 0; i < STACK_MAX_SIZE; i++)
     {
-        printf("\t%2d: %p %s\n", i, stack->_stack + i, stack->_stack[i]);
+        printf("\t%2d: %p\t%s\n", i, stack->_stack + i, *(stack->_stack + i));
     }
     printf("\t^\n\thead of stack\n");
 }
 
 void read_and_push(Stack* stack)
 {
-    char str[stack->max_str_sz];
-
-    printf("Адрес строки: %p\n", str);
-
+    char* str = malloc(stack->max_str_sz);
     printf("Введите строку >> ");
     scanf("%s", str);
-
-    printf("Сама строка: %s\n", str);
-
-    rintf("Отправили ее в push...\n");
-    push(stack, (char*) str);
+    push(stack, str);
 }
 
 void menu(Stack* stack)
@@ -116,12 +108,7 @@ int main(int argc, char** argv)
 
     menu(&stack);
 
-    push(&stack, "ARCHI");
-    push(&stack, "Vasya");
-
     print_stack(&stack);
-
-
 
     return 0;
 }
