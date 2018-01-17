@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define STACK_MAX_SIZE 15
+#define STACK_MAX_SIZE 10
 #define STACK_OVERFLOW -100
 
 typedef struct {                    /* Основная структура */
@@ -34,7 +34,7 @@ void print_stack(Stack* stack)
     
     for (int i = 0; i < STACK_MAX_SIZE; i++)
     {
-        printf("\t%2d: %p\t%s\n", i, stack->_stack + i, *(stack->_stack + i));
+        printf("\t%2d: %p\t%s\n", STACK_MAX_SIZE - i - 1, stack->_stack + i, *(stack->_stack + i));
     }
     printf("\t^\n\thead of stack\n");
 }
@@ -56,8 +56,7 @@ void menu(Stack* stack)
         printf("\nВыберите действиe\n");
         printf("\t1.Распечатать информацию о стэке\n");
         printf("\t2.Добавить слово в стэк\n");
-        printf("\t3.Изъять элемент из стэка\n");
-        printf("\t4.Выход\n");
+        printf("\t3.Выход\n");
         printf("\t>> ");
     
         scanf("%d", &state);
@@ -70,10 +69,10 @@ void menu(Stack* stack)
             case 2:          
                 read_and_push(stack);
                 break;
-            case 3:         
-                /* pop() */
+            case 3:        
+                exit(0);
                 break;
-            case 4:        
+            default:
                 exit(0);
                 break;
         }   
