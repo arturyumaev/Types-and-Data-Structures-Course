@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
+
+void print_menu()
+{
+ 
+    printf(" 1 - Обход дерева\n");
+    printf(" 2 - Вставить слово\n");
+    printf(" 3 - Удалить слово\n");
+    printf(" 4 - Максимальное\n");
+    printf(" 5 - Минимальное\n");
+    printf(" 6 - Вывести дерево\n");
+    printf(" 7 - Поиск слова\n");
+    printf(" 0 - Выход\n");
+ 
+}
 
 struct tree_node
 {

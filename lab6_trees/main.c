@@ -3,7 +3,21 @@
 #include <string.h>
 #include <assert.h>
 
-struct tree_node
+void print_menu()
+{
+ 
+    printf(" 1 - Обход дерева\n");
+    printf(" 2 - Вставить слово\n");
+    printf(" 3 - Удалить слово\n");
+    printf(" 4 - Максимальное\n");
+    printf(" 5 - Минимальное\n");
+    printf(" 6 - Вывести дерево\n");
+    printf(" 7 - Поиск слова\n");
+    printf(" 0 - Выход\n");
+ 
+}
+
+typedef struct tree_node
 {
     const char *name;
 
@@ -11,11 +25,25 @@ struct tree_node
     struct tree_node *left;
     // большие
     struct tree_node *right;
-};
+} tree_node;
 
-struct tree_node* create_node(const char *name)
+
+void print_Tree(tree_node *tree, int level)
 {
-    struct tree_node *node = malloc(sizeof(struct tree_node));
+    if(tree != NULL)
+    {
+        print_Tree(tree->left,level + 1);
+        for(int i = 0;i < level;i++) 
+            printf("      ");
+        printf("%s\n",tree->name); 
+        print_Tree(tree->right,level + 1);
+    }
+}
+
+
+tree_node* create_node(const char *name)
+{
+    tree_node *node = malloc(sizeof(tree_node));
     if (node)
     {
         node->name = name;
@@ -26,8 +54,7 @@ struct tree_node* create_node(const char *name)
     return node;
 }
 
-struct tree_node* insert(struct tree_node *tree,
-                                     struct tree_node *node)
+tree_node* insert(tree_node *tree, tree_node *node)
 {
     int cmp;
 
@@ -45,8 +72,7 @@ struct tree_node* insert(struct tree_node *tree,
     return tree;
 }
 
-struct tree_node* lookup_1(struct tree_node *tree,
-                                            const char *name)
+tree_node* lookup_1(tree_node *tree, const char *name)
 {
     int cmp;
 
@@ -62,8 +88,7 @@ struct tree_node* lookup_1(struct tree_node *tree,
         return lookup_1(tree->right, name);
 }
 
-struct tree_node* lookup_2(struct tree_node *tree,
-                                             const char *name)
+tree_node* lookup_2(tree_node *tree, const char *name)
 {
     int cmp;
 
@@ -81,9 +106,7 @@ struct tree_node* lookup_2(struct tree_node *tree,
     return NULL;
 }
 
-void apply(struct tree_node *tree,
-                 void (*f)(struct tree_node*, void*),
-                                              void *arg)
+void apply(tree_node *tree, void (*f)(tree_node*, void*), void *arg)
 {
     if (tree == NULL)
         return;
@@ -102,7 +125,9 @@ int main(int argc, char** argv)
 {
     setbuf(stdout, NULL);
 
-    printf("Hello world\n");
+    print_menu();
+
+    tree_node tree_node;
 
     return 0;
 }
