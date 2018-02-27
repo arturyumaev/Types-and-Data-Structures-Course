@@ -39,6 +39,15 @@ void print_stack(Stack* stack)
     printf("\t^\n\thead of stack\n");
 }
 
+void pop(Stack* stack)
+{
+    //char* null = (char*) malloc(stack->max_str_sz);
+    //strcpy(null, " ");
+    //push(stack, null);
+    strcpy(stack->_stack[stack->size - 1], "");
+    stack->size -= 1;
+}
+
 void read_and_push(Stack* stack)
 {
     char* str = malloc(stack->max_str_sz);
@@ -56,7 +65,8 @@ void menu(Stack* stack)
         printf("\nВыберите действиe\n");
         printf("\t1.Распечатать информацию о стэке\n");
         printf("\t2.Добавить слово в стэк\n");
-        printf("\t3.Выход\n");
+        printf("\t3.Удалить слово с вершины стэка\n");
+        printf("\t4.Выход\n");
         printf("\t>> ");
     
         scanf("%d", &state);
@@ -69,7 +79,10 @@ void menu(Stack* stack)
             case 2:          
                 read_and_push(stack);
                 break;
-            case 3:        
+            case 3:
+                pop(stack);
+                break;
+            case 4:
                 exit(0);
                 break;
             default:
