@@ -66,7 +66,7 @@ void print_stack(Node* head)
     printf("\nSTACK:\n(address)\t(str)\n");
     do
     {
-        printf("%p\t%s<>%i\n", head->str, head->str, head->size);
+        printf("%p\t%s\n", head->str, head->str);
         head = head->next;
     }
     while (head != NULL);
@@ -109,7 +109,7 @@ void menu(Node** head)
                 read_and_push(head);
                 break;
             case 3:
-                exit(0);
+                pop(head);
                 break;
             case 4:
                 exit(0);
