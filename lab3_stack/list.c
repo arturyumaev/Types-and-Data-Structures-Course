@@ -1,5 +1,4 @@
 /* Вариант 12 Юмаев Артур */
-/* Реализация в виде списка */
 
 #include <stdio.h>
 #include <string.h>
@@ -7,19 +6,6 @@
 
 #define STACK_MAX_SIZE 10
 #define STACK_OVERFLOW -100
-
-/* Обработка списка */
-typedef struct Node {
-    char* data;
-    struct Node* next;
-} Node;
-
-void push_n(Node **head, char* data) {
-    Node *tmp = (Node*) malloc(sizeof(Node));
-    tmp->data = data;
-    tmp->next = (*head);
-    (*head) = tmp;
-}
 
 typedef struct {                    /* Основная структура */
     int max_str_sz;                 /* Максимальная длина строки */
@@ -53,6 +39,15 @@ void print_stack(Stack* stack)
     printf("\t^\n\thead of stack\n");
 }
 
+void pop(Stack* stack)
+{
+    //char* null = (char*) malloc(stack->max_str_sz);
+    //strcpy(null, " ");
+    //push(stack, null);
+    strcpy(stack->_stack[stack->size - 1], "");
+    stack->size -= 1;
+}
+
 void read_and_push(Stack* stack)
 {
     char* str = malloc(stack->max_str_sz);
@@ -70,7 +65,8 @@ void menu(Stack* stack)
         printf("\nВыберите действиe\n");
         printf("\t1.Распечатать информацию о стэке\n");
         printf("\t2.Добавить слово в стэк\n");
-        printf("\t3.Выход\n");
+        printf("\t3.Удалить слово с вершины стэка\n");
+        printf("\t4.Выход\n");
         printf("\t>> ");
     
         scanf("%d", &state);
@@ -83,7 +79,10 @@ void menu(Stack* stack)
             case 2:          
                 read_and_push(stack);
                 break;
-            case 3:        
+            case 3:
+                pop(stack);
+                break;
+            case 4:
                 exit(0);
                 break;
             default:
