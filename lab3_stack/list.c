@@ -4,29 +4,47 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define PRINT(str) printf("%s\n\n", str);
-#define STACK_MAX_SIZE 10
+#define PRINT(arg) printf("%s\n", arg);
+#define STACK_MAX_SIZE 7
+#define MAX_STR_SZ 21
 #define STACK_OVERFLOW -100
 
-typedef struct Node {
+typedef struct Node
+{
     int size;
     char *str;
     struct Node *next;
 } Node;
 
-void push(Node **head, char* data) {
-
-    PRINT("no segfault1");
+int push(Node **head, char* data)
+{
     Node *tmp = (Node*) malloc(sizeof(Node));
-    PRINT("no segfault2");
+    
+    tmp->str = (char*) malloc(MAX_STR_SZ);    
+    
     strcpy(tmp->str, data);
-    PRINT("no segfault3");
-    tmp->size++;
-    PRINT("no segfault4");
+    
+    if ((*head) == NULL)
+    {
+        tmp->size = 1;
+    }
+    else
+    {
+        tmp->size = (*head)->size + 1;
+    }
+
+    if ((*head) != NULL)
+    {
+        if ((*head)->size >= STACK_MAX_SIZE)
+        {
+            printf("\nStack overflow! Please, delete some elememts.\n");
+            return -1;
+        }
+    }
+    
     tmp->next = (*head);
-    PRINT("no segfault5");
+    
     (*head) = tmp;
-    PRINT("no segfault6");
 }
 
 int pop(Node **head) {
@@ -41,13 +59,79 @@ int pop(Node **head) {
     return 0;
 }
 
+void print_stack(Node* head)
+{
+    int stack_size = head->size;
+
+    printf("\nSTACK:\n(address)\t(str)\n");
+    do
+    {
+        printf("%p\t%s<>%i\n", head->str, head->str, head->size);
+        head = head->next;
+    }
+    while (head != NULL);
+
+    for (int i = stack_size; i < STACK_MAX_SIZE; i++)
+    {
+        printf("freeAddr\tfree\n");
+    }
+}
+
+void read_and_push(Node** head)
+{
+    char* str = (char*) malloc(MAX_STR_SZ);
+    printf("Введите строку >> ");
+    scanf("%s", str);
+    push(head, str);
+}
+
+void menu(Node** head)
+{
+    int state;
+
+    while (state != 4)
+    {
+        printf("\nВыберите действиe\n");
+        printf("\t1.Распечатать информацию о стэке\n");
+        printf("\t2.Добавить слово в стэк\n");
+        printf("\t3.Удалить слово с вершины стэка\n");
+        printf("\t4.Выход\n");
+        printf("\t>> ");
+    
+        scanf("%d", &state);
+            
+        switch (state)
+        {
+            case 1:
+                print_stack(*head);
+                break;
+            case 2:
+                read_and_push(head);
+                break;
+            case 3:
+                exit(0);
+                break;
+            case 4:
+                exit(0);
+                break;
+            default:
+                exit(0);
+                break;
+        }   
+    } 
+}
+
 int main(int argc, char** argv)
 {
     setbuf(stdout, NULL);
     Node *head = NULL;
 
-    char str[] = "new";
-    push(&head, str);
+    push(&head, "test1");
+    push(&head, "test2");
+    push(&head, "test3");
+    push(&head, "test4");
+
+    menu(&head);
 
     return 0;
 }
