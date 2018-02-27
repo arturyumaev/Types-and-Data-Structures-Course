@@ -11,4 +11,4 @@ bld_a:	array.c
 
 bld_l:	list.c
 	gcc -o list.exe list.c
-	./list.c
+	./list.exe
